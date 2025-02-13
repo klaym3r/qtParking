@@ -22,8 +22,6 @@ public:
     void setH(double h) { h_ = h; }
     void setNum(int h) { h_ = h; }
 
-    void center();
-
     friend class Widget;
 
 private:

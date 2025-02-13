@@ -3,58 +3,49 @@
 
 #include <cmath>
 
+#include "node.h"
+
 class Widget;
 
 class Car
 {
 public:
     Car();
-    Car(double x, double y, double w, double h);
+    Car(double x, double y, double w, double h, double wheelbase = 0);
 
     double getX() const { return x_; }
     double getY() const { return y_; }
     double getW() const { return w_; }
     double getH() const { return h_; }
-    double getCourseAngle() const { return courseAngle_; }
-    double getSteeringAngle() const { return steeringAngle_; }
+    double getCourseAngle() const { return course_angle_; }
+    double getSteeringAngle() const { return steering_angle_; }
+    double getVelocity() const { return velocity_; }
+    double getMinTurnRadius() const { return l_ / tan(max_steering_angle_); }
 
     void setX(double x) { x_ = x; }
     void setY(double y) { y_ = y; }
     void setW(double w) { w_ = w; }
     void setH(double h) { h_ = h; }
-    void setCourseAngle(double angle) { courseAngle_ = angle; }
-    void setSteeringAngle(double angle) { steeringAngle_ = angle; }
+    void setWheelBase(double wheelbase) { l_ = wheelbase; }
+    void setSteeringAngle(double angle);
+    void setVelocity(double velocity) { velocity_ = velocity; }
 
-    void moveForward();
-    void moveBackward();
-    void turn();
+    void move();
+
 
     friend class Widget;
 
 private:
-    double x_;
-    double y_;
-    double w_;
-    double h_;
+    double x_, y_; // координаты отрисовки
+    double rx_, ry_; // координаты задней оси
+    double w_, h_;
+    double l_; // длина колесной базы
+    double steering_angle_ = 0;
+    double course_angle_ = 0;
+    double velocity_ = 0;
+    const double max_steering_angle_ = 35;
 
-    // r is the midpoint of the rear wheel
-    double rx_;
-    double ry_;
-
-    // f is the midpoint of the front wheel
-    double fx_;
-    double fy_;
-
-    // distance between r and f
-    double l_;
-
-    // angles
-    double courseAngle_ = 0.0; // course angle of the car
-    double steeringAngle_ = 0.0; // steering angle
-    const double maxSteeringAngle_ = 35 * M_PI / 180; // 35 is average value
-
-    // velocty
-    const double velocity_ = 5.0;
+    QVector<Node> cords_;
 };
 
 #endif // CAR_H

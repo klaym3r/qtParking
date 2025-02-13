@@ -1,8 +1,6 @@
+#include <iostream>
+
 #include "slot.h"
 
 Slot::Slot() {}
-
-void Slot::center() {
-    x_ = x_ + w_ / 2;
-    y_ = y_ + h_ / 2;
-}
+Slot::Slot(double x, double y, double w, double h) : x_(x), y_(y), w_(w), h_(h) {};
